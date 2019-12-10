@@ -1,4 +1,5 @@
 #!/bin/bash -x
+
 echo "Welcome to FlipCoinSimulator"
 
 declare -A coin
@@ -44,14 +45,9 @@ function main(){
 	for (( i=1;i<=10;i++ ))
 	do
 		value=$(getFlipCoin)
-#		echo "value-->$value"
 		coin[$value]=$(( ${coin["$value"]} + 1 ))
-#		echo ${coin[$value]}
 		percentage=$(getpercentage ${coin[$value]} $value)
-
 	done
-
-
 }
 
 main $DOUBLET
