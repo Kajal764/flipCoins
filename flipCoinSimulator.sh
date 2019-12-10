@@ -1,9 +1,12 @@
+#!/bin/bash -x
 echo "Welcome to FlipCoinSimulator"
 
 declare -A coin
+declare -A percentageDict
 HEAD=H
 TAIL=T
 SINGLET=1
+DOUBLET=2
 
 function getRandomFlip(){
    value=$((RANDOM%2))
@@ -11,39 +14,50 @@ function getRandomFlip(){
 }
 
 function getFlipCoin(){
-   numOfFlip=1
+   numOfFlip=$DOUBLET
+	key=""
    for(( j=1;j<=numOfFlip;j++ ))
    do
-      value=$(($(getRandomFlip)))
+	value=$(($(getRandomFlip)))
+	if [[ $value -eq 0 ]]
+	then
+		key="$key""H"
+	else
+		key="$key""T"
+	fi
    done
-	echo $value
+echo $key
+}
+
+function getpercentage(){
+	p=$1
+	value=$2
+	percent=$(($(($p*100))/10))
+	percentageDict[$value]=$percent
 }
 
 function main(){
 	flip=$1
 	countT=0
 	countH=0
+	key=1
 	for (( i=1;i<=10;i++ ))
 	do
 		value=$(getFlipCoin)
-		if [[ $value -eq 0 ]]
-		then
-			key="H"
-			countH=$(($countH+1))
-			coin[$key]="T---> $countT"
+#		echo "value-->$value"
+		coin[$value]=$(( ${coin["$value"]} + 1 ))
+#		echo ${coin[$value]}
+		percentage=$(getpercentage ${coin[$value]} $value)
 
-		else
-			key="T"
-			countT=$(($countT+1))
-			coin[$key]="H---> $countH"
-
-		fi
 	done
 
-echo "H=$(($(($countH * 100 ))/10))
-echo "T=$(($(($countT * 100 ))/10))
+
 }
 
+main $DOUBLET
 
-
-main $SINGLET
+for val in ${!coin[@]}
+do
+	percent=$(( $((${coin[$val]} * 100)) / 10 ))
+	echo "$val ${coin[$val]} $percent%"
+done  
