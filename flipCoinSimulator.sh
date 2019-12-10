@@ -8,6 +8,7 @@ HEAD=H
 TAIL=T
 SINGLET=1
 DOUBLET=2
+TRIPLET=3
 
 function getRandomFlip(){
    value=$((RANDOM%2))
@@ -15,7 +16,7 @@ function getRandomFlip(){
 }
 
 function getFlipCoin(){
-   numOfFlip=$DOUBLET
+   numOfFlip=$TRIPLET
 	key=""
    for(( j=1;j<=numOfFlip;j++ ))
    do
@@ -50,7 +51,7 @@ function main(){
 	done
 }
 
-main $DOUBLET
+main $TRIPLET
 
 for val in ${!coin[@]}
 do
