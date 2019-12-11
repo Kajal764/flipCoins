@@ -4,11 +4,11 @@ echo "Welcome to FlipCoinSimulator"
 
 declare -A coin
 declare -A percentageDict
-HEAD=H
-TAIL=T
-SINGLET=1
-DOUBLET=2
-TRIPLET=3
+
+#SINGLET=1
+#DOUBLET=2
+#TRIPLET=3
+numOfFlipCoin=0
 
 function getRandomFlip(){
    value=$((RANDOM%2))
@@ -16,7 +16,7 @@ function getRandomFlip(){
 }
 
 function getFlipCoin(){
-   numOfFlip=$TRIPLET
+   numOfFlip=$numOfFlipCoin
 	key=""
    for(( j=1;j<=numOfFlip;j++ ))
    do
@@ -31,15 +31,10 @@ function getFlipCoin(){
 echo $key
 }
 
-function getpercentage(){
-	p=$1
-	value=$2
-	percent=$(($(($p*100))/10))
-	percentageDict[$value]=$percent
-}
-
 function main(){
-	flip=$1
+	echo "Enter How Many Coin You Want To Flip!!!!"
+	read flip
+	numOfFlipCoin=$flip
 	countT=0
 	countH=0
 	key=1
@@ -47,14 +42,17 @@ function main(){
 	do
 		value=$(getFlipCoin)
 		coin[$value]=$(( ${coin["$value"]} + 1 ))
-		percentage=$(getpercentage ${coin[$value]} $value)
 	done
 }
 
-main $TRIPLET
+main
 
+echo "Winning Combination!!!"
 for val in ${!coin[@]}
 do
 	percent=$(( $((${coin[$val]} * 100)) / 10 ))
 	echo "$val ${coin[$val]} $percent%"
-done  
+done | sort -k3 -nr  | awk 'NR==1{print ($1 "   " $2)}'
+
+
+
