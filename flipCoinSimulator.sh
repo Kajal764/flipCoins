@@ -52,7 +52,7 @@ for val in ${!coin[@]}
 do
 	percent=$(( $((${coin[$val]} * 100)) / 10 ))
 	echo "$val ${coin[$val]} $percent%"
-done | sort -k3 -nr  | awk 'NR==1{print ($1 "   " $2)}'
+done | sort -k3 -nr  | awk 'NR==1{print ($1 "   " $2 "   "$3)}'
 
 
 
