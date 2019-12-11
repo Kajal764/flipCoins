@@ -3,7 +3,6 @@
 echo "Welcome to FlipCoinSimulator"
 
 declare -A coin
-declare -A percentageDict
 
 #SINGLET=1
 #DOUBLET=2
@@ -11,33 +10,31 @@ declare -A percentageDict
 numOfFlipCoin=0
 
 function getRandomFlip(){
-   value=$((RANDOM%2))
+	value=$((RANDOM%2))
 	echo $value
 }
 
 function getFlipCoin(){
-   numOfFlip=$numOfFlipCoin
+	numOfFlip=$numOfFlipCoin
 	key=""
-   for(( j=1;j<=numOfFlip;j++ ))
-   do
-	value=$(($(getRandomFlip)))
-	if [[ $value -eq 0 ]]
-	then
-		key="$key""H"
-	else
-		key="$key""T"
-	fi
-   done
-echo $key
+   	for(( j=1;j<=numOfFlip;j++ ))
+   	do
+		value=$(($(getRandomFlip)))
+		if [[ $value -eq 0 ]]
+		then
+			key="$key""H"
+		else
+			key="$key""T"
+		fi
+   	done
+	echo $key
 }
 
 function main(){
 	echo "Enter How Many Coin You Want To Flip!!!!"
 	read flip
 	numOfFlipCoin=$flip
-	countT=0
-	countH=0
-	key=1
+	
 	for (( i=1;i<=10;i++ ))
 	do
 		value=$(getFlipCoin)
