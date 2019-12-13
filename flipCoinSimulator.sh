@@ -9,18 +9,12 @@ declare -A coin
 #TRIPLET=3
 numOfFlipCoin=0
 
-function getRandomFlip(){
-	value=$((RANDOM%2))
-	echo $value
-}
-
 function getFlipCoin(){
 	numOfFlip=$numOfFlipCoin
 	key=""
    	for(( j=1;j<=numOfFlip;j++ ))
    	do
-		value=$(($(getRandomFlip)))
-		if [[ $value -eq 0 ]]
+		if [[ $((RANDOM%2)) -eq 0 ]]
 		then
 			key="$key""H"
 		else
